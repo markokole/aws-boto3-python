@@ -1,4 +1,4 @@
-# aws-boto3-python
+# Small demo with AWS, python and boto
 
 ## Prerequisities
 
