@@ -1,0 +1,31 @@
+FROM centos:latest
+LABEL maintainer marko
+
+USER root
+
+RUN yum install -y epel-release \
+    yum -y update
+
+RUN yum install -y \
+        python-pip \
+        git \
+        wget \
+        unzip \
+        jq \
+        net-tools
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
+RUN wget https://repo.anaconda.com/archive/Anaconda3-2019.07-Linux-x86_64.sh -P /tmp
+RUN chmod 700 /tmp/Anaconda3-2019.07-Linux-x86_64.sh
+
+RUN /tmp/Anaconda3-2019.07-Linux-x86_64.sh -b -u -p /usr/anaconda3
+
+RUN rm -f /usr/bin/python
+RUN ln -s /usr/anaconda3/bin/python3.7 /usr/bin/python3.7
+RUN ln -s /usr/bin/python3.7 /usr/bin/python
+
+RUN python -m pip install --user boto3
+
+RUN echo TESTFILE > /tmp/test.txt
